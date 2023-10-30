@@ -33,19 +33,22 @@ fun parseImageString(input: String): List<Map<String, Any>> {
 
     val imageEntries = input.split("}, {")
     for (entry in imageEntries) {
-        val map = entry
-            .replace("{", "")
-            .replace("}", "")
-            .split(", ")
-            .associate {
-                val parts = it.split("=")
-                parts[0] to when {
-                    parts[1].matches(Regex("-?\\d+(\\.\\d+)?")) -> parts[1].toDouble()
-                    parts[1] == "true" || parts[1] == "false" -> parts[1].toBoolean()
-                    else -> parts[1]
+        try {
+            val map = entry
+                .replace("{", "")
+                .replace("}", "")
+                .split(", ")
+                .associate {
+                    val parts = it.split("=")
+                    parts[0] to when {
+                        parts[1].matches(Regex("-?\\d+(\\.\\d+)?")) -> parts[1].toDouble()
+                        parts[1] == "true" || parts[1] == "false" -> parts[1].toBoolean()
+                        else -> parts[1]
+                    }
                 }
-            }
-        imageList.add(map)
+            imageList.add(map)
+        } catch (e: Exception) {
+        }
     }
 
     return imageList

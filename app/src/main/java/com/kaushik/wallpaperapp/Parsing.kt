@@ -30,26 +30,16 @@ fun jsonRecursive(str: String): Map<String, Any> {
 
 fun parseImageString(input: String): List<Map<String, Any>> {
     val imageList = mutableListOf<Map<String, Any>>()
-
-    val imageEntries = input.split("}, {")
-    for (entry in imageEntries) {
-        try {
-            val map = entry
-                .replace("{", "")
-                .replace("}", "")
-                .split(", ")
-                .associate {
-                    val parts = it.split("=")
-                    parts[0] to when {
-                        parts[1].matches(Regex("-?\\d+(\\.\\d+)?")) -> parts[1].toDouble()
-                        parts[1] == "true" || parts[1] == "false" -> parts[1].toBoolean()
-                        else -> parts[1]
-                    }
-                }
-            imageList.add(map)
-        } catch (e: Exception) {
+    val imageListString = input.split("}, {")
+    for (i in imageListString) {
+        val imageMap = mutableMapOf<String, Any>()
+        val imageMapString = i.split(",")
+        for (j in imageMapString) {
+            val entries = j.split("=")
+            if (entries.size < 2) continue
+            imageMap[entries[0]] = entries[1]
         }
+        imageList.add(imageMap)
     }
-
     return imageList
 }

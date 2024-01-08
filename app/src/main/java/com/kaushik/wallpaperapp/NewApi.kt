@@ -11,10 +11,12 @@ object NewApi {
     @JvmStatic
     fun main(args: Array<String>) {
         val urlBuilder = "https://pixabay.com/api".toHttpUrlOrNull()!!.newBuilder()
-        val params = mutableMapOf<String, String?>(
+        val params = mapOf<String, String?>(
             "key" to "40393604-97e3ed091f2c7a1a29352b92e",
-            "q" to "navy",
-            "orientation" to "vertical"
+            "category" to "nature",
+            "orientation" to "vertical",
+            "image_type" to "photo",
+            "order" to "popular"
         )
 
         for (i in params) {
@@ -22,6 +24,7 @@ object NewApi {
         }
 
         println(urlBuilder.toString())
+//        return
         val url = urlBuilder.build()
         val request = builder.url(url).build()
         val response = okHttpClient.newCall(request).execute()
@@ -34,8 +37,10 @@ object NewApi {
         val responseJson = jsonRecursive(responseString)
         println(responseJson)
         var imagesString = responseJson["hits"].toString()
-        imagesString = imagesString.substring(1, imagesString.length - 1)
+        imagesString = imagesString.substring(2, imagesString.length - 2)
         println(imagesString)
-        println(parseImageString(imagesString))
+        println()
+        val imageMapList = parseImageString(imagesString)
+        println(imageMapList[0].keys)
     }
 }

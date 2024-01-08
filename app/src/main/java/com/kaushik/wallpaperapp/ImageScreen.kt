@@ -41,12 +41,12 @@ fun ImageScreen(navController: NavHostController) {
         verticalArrangement = Arrangement.Center
     ) {
         val sharedPreferences = context.getSharedPreferences("data", Context.MODE_PRIVATE)
-        val response = sharedPreferences.getString("images", null)
+        val responseString = sharedPreferences.getString("images", null).toString()
         val category = sharedPreferences.getString("category", null).toString()
-        val jsonMap = jsonRecursive(response.toString())
-        var imagesData = jsonMap["photos"].toString()
-        imagesData = imagesData.substring(1, imagesData.length - 1)
-        val imagesList = parseImageString(imagesData)
+        val responseJson = jsonRecursive(responseString)
+        var imagesString = responseJson["hits"].toString()
+        imagesString = imagesString.substring(2, imagesString.length - 2)
+        val imagesMapList = parseImageString(imagesString)
         Box(
             modifier = Modifier
                 .padding(10.dp)
@@ -81,12 +81,12 @@ fun ImageScreen(navController: NavHostController) {
         ) {
             item {
                 var i = 0
-                while (i < imagesList.size) {
+                while (i < imagesMapList.size) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
-                        var imageData = imagesList[i]
+                        var imageData = imagesMapList[i]
                         i++
                         Card(
                             onClick = {},
@@ -98,15 +98,15 @@ fun ImageScreen(navController: NavHostController) {
                             elevation = 15.dp
                         ) {
                             AsyncImage(
-                                model = imageData["small"],
+                                model = imageData["largeImageURL"],
                                 contentDescription = "",
                                 modifier = Modifier.fillMaxSize(),
                                 contentScale = ContentScale.FillBounds,
                                 placeholder = painterResource(id = R.drawable.placeholder)
                             )
                         }
-                        if (i < imagesList.size) {
-                            imageData = imagesList[i]
+                        if (i < imagesMapList.size) {
+                            imageData = imagesMapList[i]
                             i++
                             Card(
                                 onClick = {

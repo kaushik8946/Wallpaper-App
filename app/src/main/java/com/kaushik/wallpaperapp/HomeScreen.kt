@@ -24,33 +24,31 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun HomeScreen(navController: NavHostController) {
-    val context= LocalContext.current
+    val context = LocalContext.current
 
-    val input = rememberSaveable {mutableStateOf("")}
-    Column (
-        modifier=Modifier.fillMaxWidth(),
+    val input = rememberSaveable { mutableStateOf("") }
+    Column(
+        modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
-    ){
+    ) {
         OutlinedTextField(
             value = input.value,
             onValueChange = { input.value = it },
-            label={ Text(text = "Enter category:")},
+            label = { Text(text = "Enter category:") },
             shape = RoundedCornerShape(20.dp),
-            modifier=Modifier.height(60.dp),
+            modifier = Modifier.height(60.dp),
             singleLine = true
         )
         Button(onClick = {
-            if(input.value.isEmpty()) {
+            if (input.value.isEmpty()) {
                 Toast.makeText(context, "enter text", Toast.LENGTH_SHORT).show()
-            }
-            else{
-                val isSuccess= validate(context,input.value)
-                if (isSuccess){
+            } else {
+                val isSuccess = validate(context, input.value)
+                if (isSuccess) {
                     Toast.makeText(context, "Successful!", Toast.LENGTH_SHORT).show()
                     navController.navigate("images")
-                }
-                else
+                } else
                     Toast.makeText(context, "No response", Toast.LENGTH_SHORT).show()
             }
         }) {
@@ -60,15 +58,15 @@ fun HomeScreen(navController: NavHostController) {
 }
 
 @OptIn(DelicateCoroutinesApi::class)
-fun validate(context: Context, input:String):Boolean{
-    var response:String=""
-    var isFinish=false
+fun validate(context: Context, input: String): Boolean {
+    var response = ""
+    var isFinish = false
     GlobalScope.launch {
-        response= API.getResponse(input).toString()
-        isFinish=true
+        response = API.getResponse(input).toString()
+        isFinish = true
     }
     while (!isFinish);
-    val sharedPreferences=context.getSharedPreferences("data",Context.MODE_PRIVATE)
+    val sharedPreferences = context.getSharedPreferences("data", Context.MODE_PRIVATE)
     sharedPreferences.edit().putString("images", response).commit()
     sharedPreferences.edit().putString("category", input).commit()
     return true

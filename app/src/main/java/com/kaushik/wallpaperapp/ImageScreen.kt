@@ -13,9 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
@@ -51,10 +49,6 @@ fun ImageScreen(navController: NavHostController) {
         imagesString = imagesString.substring(2, imagesString.length - 2)
         val imagesMapList = parseImageString(imagesString)
         Log.d("data", imagesMapList[0].toString())
-        for (i in imagesMapList) {
-            Log.d("data", i["largeImageURL"].toString())
-            break
-        }
         Box(
             modifier = Modifier
                 .padding(10.dp)
@@ -105,20 +99,13 @@ fun ImageScreen(navController: NavHostController) {
                             shape = RoundedCornerShape(20.dp),
                             elevation = 15.dp
                         ) {
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .verticalScroll(rememberScrollState())
-                            ) {
-                                Text(text = imageData["largeImageURL"].toString())
-                            }
-                            /*AsyncImage(
-                                model = imageData["largeImageURL"].toString(),
+                            AsyncImage(
+                                model = imageData[" largeImageURL"].toString(),
                                 contentDescription = "",
                                 modifier = Modifier.fillMaxSize(),
                                 contentScale = ContentScale.FillBounds,
                                 placeholder = painterResource(id = R.drawable.placeholder)
-                            )*/
+                            )
                         }
                         if (i < imagesMapList.size) {
                             imageData = imagesMapList[i]
@@ -135,7 +122,7 @@ fun ImageScreen(navController: NavHostController) {
                                 elevation = 15.dp
                             ) {
                                 AsyncImage(
-                                    model = imageData["largeImageURL"].toString(),
+                                    model = imageData[" largeImageURL"].toString(),
                                     contentDescription = "",
                                     modifier = Modifier
                                         .fillMaxWidth()

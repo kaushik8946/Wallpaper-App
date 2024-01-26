@@ -24,7 +24,6 @@ object NewApi {
         }
 
         println(urlBuilder.toString())
-//        return
         val url = urlBuilder.build()
         val request = builder.url(url).build()
         val response = okHttpClient.newCall(request).execute()

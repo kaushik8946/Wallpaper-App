@@ -12,14 +12,14 @@ object API {
         val urlBuilder = "https://pixabay.com/api".toHttpUrlOrNull()!!.newBuilder()
         val params = mapOf<String, String?>(
             "key" to "40393604-97e3ed091f2c7a1a29352b92e",
-            "category" to category,
+            "q" to category,
             "orientation" to "vertical",
-            "image_type" to "photo",
-            "order" to "popular"
+            "image_type" to "photo"
         )
         for (entry in params) {
             urlBuilder.addQueryParameter(entry.key, entry.value)
         }
+        println(urlBuilder)
         val url = urlBuilder.build()
         val request = builder.url(url).build()
         val response = okHttpClient.newCall(request).execute()

@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -91,7 +90,9 @@ fun ImageScreen(navController: NavHostController) {
                         var imageData = imagesMapList[i]
                         i++
                         Card(
-                            onClick = {},
+                            onClick = {
+
+                            },
                             modifier = Modifier
                                 .padding(10.dp)
                                 .fillMaxWidth(.5f)
@@ -99,13 +100,7 @@ fun ImageScreen(navController: NavHostController) {
                             shape = RoundedCornerShape(20.dp),
                             elevation = 15.dp
                         ) {
-                            AsyncImage(
-                                model = imageData[" largeImageURL"].toString(),
-                                contentDescription = "",
-                                modifier = Modifier.fillMaxSize(),
-                                contentScale = ContentScale.FillBounds,
-                                placeholder = painterResource(id = R.drawable.placeholder)
-                            )
+                            SetImage(imageUrl = imageData[" largeImageURL"].toString())
                         }
                         if (i < imagesMapList.size) {
                             imageData = imagesMapList[i]
@@ -121,15 +116,7 @@ fun ImageScreen(navController: NavHostController) {
                                 shape = RoundedCornerShape(20.dp),
                                 elevation = 15.dp
                             ) {
-                                AsyncImage(
-                                    model = imageData[" largeImageURL"].toString(),
-                                    contentDescription = "",
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .fillMaxHeight(),
-                                    contentScale = ContentScale.Crop,
-                                    placeholder = painterResource(id = R.drawable.placeholder)
-                                )
+                                SetImage(imageUrl = imageData[" largeImageURL"].toString())
                             }
                         }
                     }
@@ -137,4 +124,15 @@ fun ImageScreen(navController: NavHostController) {
             }
         }
     }
+}
+
+@Composable
+fun SetImage(imageUrl: String) {
+    AsyncImage(
+        model = imageUrl,
+        contentDescription = "",
+        modifier = Modifier.fillMaxSize(),
+        contentScale = ContentScale.Crop,
+        placeholder = painterResource(id = R.drawable.placeholder)
+    )
 }

@@ -14,10 +14,11 @@ object API {
             "key" to "40393604-97e3ed091f2c7a1a29352b92e",
             "q" to category,
             "orientation" to "vertical",
-            "image_type" to "photo"
+            "image_type" to "photo",
+            "order" to "popular"
         )
-        for (entry in params) {
-            urlBuilder.addQueryParameter(entry.key, entry.value)
+        for ((key, value) in params) {
+            urlBuilder.addQueryParameter(key, value)
         }
         println(urlBuilder)
         val url = urlBuilder.build()

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Wallpaper App</string>
+    <string name="title_activity_images">ImagesActivity</string>
 </resources>

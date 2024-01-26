@@ -24,7 +24,7 @@ object API {
         val request = builder.url(url).build()
         val response = okHttpClient.newCall(request).execute()
         return if (response.isSuccessful) {
-            response.body!!.string()
+            response.body?.string()
         } else {
             null
         }

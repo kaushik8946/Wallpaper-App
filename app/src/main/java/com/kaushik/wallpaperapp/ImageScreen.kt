@@ -1,6 +1,7 @@
 package com.kaushik.wallpaperapp
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,7 +13,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
@@ -41,12 +44,17 @@ fun ImageScreen(navController: NavHostController) {
         verticalArrangement = Arrangement.Center
     ) {
         val sharedPreferences = context.getSharedPreferences("data", Context.MODE_PRIVATE)
-        val responseString = sharedPreferences.getString("images", null).toString()
+        val responseString = sharedPreferences.getString("images", "").toString()
         val category = sharedPreferences.getString("category", null).toString()
         val responseJson = jsonRecursive(responseString)
         var imagesString = responseJson["hits"].toString()
         imagesString = imagesString.substring(2, imagesString.length - 2)
         val imagesMapList = parseImageString(imagesString)
+        Log.d("data", imagesMapList[0].toString())
+        for (i in imagesMapList) {
+            Log.d("data", i["largeImageURL"].toString())
+            break
+        }
         Box(
             modifier = Modifier
                 .padding(10.dp)
@@ -97,13 +105,20 @@ fun ImageScreen(navController: NavHostController) {
                             shape = RoundedCornerShape(20.dp),
                             elevation = 15.dp
                         ) {
-                            AsyncImage(
-                                model = imageData["largeImageURL"],
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .verticalScroll(rememberScrollState())
+                            ) {
+                                Text(text = imageData["largeImageURL"].toString())
+                            }
+                            /*AsyncImage(
+                                model = imageData["largeImageURL"].toString(),
                                 contentDescription = "",
                                 modifier = Modifier.fillMaxSize(),
                                 contentScale = ContentScale.FillBounds,
                                 placeholder = painterResource(id = R.drawable.placeholder)
-                            )
+                            )*/
                         }
                         if (i < imagesMapList.size) {
                             imageData = imagesMapList[i]
@@ -119,9 +134,8 @@ fun ImageScreen(navController: NavHostController) {
                                 shape = RoundedCornerShape(20.dp),
                                 elevation = 15.dp
                             ) {
-
                                 AsyncImage(
-                                    model = imageData["tiny"],
+                                    model = imageData["largeImageURL"].toString(),
                                     contentDescription = "",
                                     modifier = Modifier
                                         .fillMaxWidth()

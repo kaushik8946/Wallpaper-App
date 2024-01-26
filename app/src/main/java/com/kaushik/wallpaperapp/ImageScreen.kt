@@ -88,10 +88,14 @@ fun ImageScreen(navController: NavHostController) {
                         horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
                         var imageData = imagesMapList[i]
+                        var imageUrl = imageData[" largeImageURL"].toString()
                         i++
                         Card(
                             onClick = {
-
+                                sharedPreferences.edit()
+                                    .putString("imageUrl", imageUrl)
+                                    .commit()
+                                navController.navigate("set_wallpaper")
                             },
                             modifier = Modifier
                                 .padding(10.dp)
@@ -100,14 +104,25 @@ fun ImageScreen(navController: NavHostController) {
                             shape = RoundedCornerShape(20.dp),
                             elevation = 15.dp
                         ) {
-                            SetImage(imageUrl = imageData[" largeImageURL"].toString())
+                            AsyncImage(
+                                model = imageUrl,
+                                contentDescription = "",
+                                modifier = Modifier.fillMaxSize(),
+                                contentScale = ContentScale.Crop,
+                                placeholder = painterResource(id = R.drawable.placeholder)
+                            )
                         }
                         if (i < imagesMapList.size) {
                             imageData = imagesMapList[i]
+                            imageUrl = imageData[" largeImageURL"].toString()
                             i++
                             Card(
                                 onClick = {
-
+                                    sharedPreferences.edit().putString(
+                                        "imageUrl",
+                                        imageUrl
+                                    ).commit()
+                                    navController.navigate("set_wallpaper")
                                 },
                                 modifier = Modifier
                                     .padding(10.dp)
@@ -116,23 +131,18 @@ fun ImageScreen(navController: NavHostController) {
                                 shape = RoundedCornerShape(20.dp),
                                 elevation = 15.dp
                             ) {
-                                SetImage(imageUrl = imageData[" largeImageURL"].toString())
-                            }
+                                AsyncImage(
+                                    model = imageUrl,
+                                    contentDescription = "",
+                                    modifier = Modifier.fillMaxSize(),
+                                    contentScale = ContentScale.Crop,
+                                    placeholder = painterResource(id = R.drawable.placeholder)
+                                )
+}
                         }
                     }
                 }
             }
         }
     }
-}
-
-@Composable
-fun SetImage(imageUrl: String) {
-    AsyncImage(
-        model = imageUrl,
-        contentDescription = "",
-        modifier = Modifier.fillMaxSize(),
-        contentScale = ContentScale.Crop,
-        placeholder = painterResource(id = R.drawable.placeholder)
-    )
 }

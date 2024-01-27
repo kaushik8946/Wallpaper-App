@@ -42,7 +42,7 @@ fun SetWallpaper(navController: NavHostController) {
             contentDescription = "",
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(.8f),
+                .fillMaxHeight(.9f),
             contentScale = ContentScale.FillBounds,
             placeholder = painterResource(id = R.drawable.placeholder)
         )

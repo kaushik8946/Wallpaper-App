@@ -47,7 +47,11 @@ fun ImageScreen(navController: NavHostController) {
         val category = sharedPreferences.getString("category", null).toString()
         val responseJson = jsonRecursive(responseString)
         var imagesString = responseJson["hits"].toString()
-        imagesString = imagesString.substring(2, imagesString.length - 2)
+        imagesString = try {
+            imagesString.substring(2, imagesString.length - 2)
+        } catch (e: Exception) {
+            ""
+        }
         val imagesMapList = parseImageString(imagesString)
         Log.d("data", imagesMapList[0].toString())
         Box(

@@ -25,10 +25,16 @@ object API {
         val url = urlBuilder.build()
         val request = builder.url(url).build()
         val response = okHttpClient.newCall(request).execute()
-        return if (response.isSuccessful) {
-            response.body?.string()
+        if (response.isSuccessful) {
+            var responseMap = jsonRecursive(response.body?.string()!!)
+            val totalHits = responseMap["totalHits"].toString().toDoubleOrNull()
+            if (totalHits == 0.0) {
+                return null
+            }
+            return response.body?.string()
         } else {
-            null
+            return null
         }
+
     }
 }

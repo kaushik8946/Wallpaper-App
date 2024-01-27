@@ -26,6 +26,9 @@ class MainActivity : ComponentActivity() {
             composable("images") {
                 ImageScreen(navController)
             }
+            composable("set_wallpaper") {
+                SetWallpaper()
+            }
         }
     }
 }

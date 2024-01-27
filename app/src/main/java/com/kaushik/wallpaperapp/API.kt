@@ -15,7 +15,8 @@ object API {
             "q" to category,
             "orientation" to "vertical",
             "image_type" to "photo",
-            "order" to "popular"
+            "order" to "popular",
+            "per_page" to "40"
         )
         for ((key, value) in params) {
             urlBuilder.addQueryParameter(key, value)

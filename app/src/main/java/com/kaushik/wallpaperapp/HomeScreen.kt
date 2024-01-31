@@ -12,10 +12,8 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -33,7 +31,7 @@ fun HomeScreen(navController: NavHostController) {
     val context = LocalContext.current
 
     val input = rememberSaveable { mutableStateOf("") }
-    var isLoading by rememberSaveable { mutableStateOf(false) }
+    var isLoading = rememberSaveable { mutableStateOf(false) }
     val keyboardController = LocalSoftwareKeyboardController.current!!
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -48,25 +46,25 @@ fun HomeScreen(navController: NavHostController) {
             modifier = Modifier.height(60.dp),
             singleLine = true
         )
+        if (isLoading.value) {
+            CircularProgressIndicator()
+        }
         Button(onClick = {
             if (input.value.isEmpty()) {
                 Toast.makeText(context, "enter text", Toast.LENGTH_SHORT).show()
             } else {
-                isLoading = true
+                isLoading.value = true
                 keyboardController.hide()
                 val isSuccess = validate(context, input.value)
                 if (isSuccess) {
                     Toast.makeText(context, "Successful!", Toast.LENGTH_SHORT).show()
                     navController.navigate("images")
-                    isLoading = false
+                    isLoading.value = false
                 } else
                     Toast.makeText(context, "No response", Toast.LENGTH_SHORT).show()
             }
         }) {
             Text(text = "Search")
-        }
-        if (isLoading) {
-            CircularProgressIndicator()
         }
     }
 }

@@ -1,6 +1,5 @@
 package com.kaushik.wallpaperapp
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
@@ -29,7 +28,6 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalComposeUiApi::class)
-@SuppressLint("ServiceCast")
 @Composable
 fun HomeScreen(navController: NavHostController) {
     val context = LocalContext.current

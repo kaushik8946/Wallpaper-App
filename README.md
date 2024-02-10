@@ -6,6 +6,7 @@ https://github.com/kaushik8946/Wallpaper-App/assets/109019850/d41246ba-cba9-4303
 
 - **Searchable:** Users can input keywords or phrases to find relevant images.
 - **Image Gallery:** App displays a list of images based on the user's search.
+- **One-Tap Wallpaper Setting:** Instantly personalize your device with any image - simply tap **Yes** to set it as your home screen and lock screen wallpaper.
 
 # Tech Stack
 

@@ -18,7 +18,7 @@ https://github.com/kaushik8946/Wallpaper-App/assets/109019850/d41246ba-cba9-4303
 
 - Android Studio
 - Android 10 (API level 29) or above
-- Gradle Version - 8.0
-- Android Gradle Plugin Version - 8.1.2
+- Gradle Version - 8.2
+- Android Gradle Plugin Version - 8.2.2
 - Java Development Kit (JDK) Version - JDK 19
 - Kotlin Version - 1.9.0

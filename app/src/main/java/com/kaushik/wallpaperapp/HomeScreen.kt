@@ -3,12 +3,11 @@ package com.kaushik.wallpaperapp
 import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -32,46 +31,39 @@ fun HomeScreen(navController: NavHostController) {
     val input = rememberSaveable { mutableStateOf("") }
     val isLoading = rememberSaveable { mutableStateOf(false) }
     val keyboardController = LocalSoftwareKeyboardController.current!!
-    LazyColumn(
+    Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        item {
-            if (isLoading.value)
-                CircularProgressIndicator()
-        }
-        item {
-            OutlinedTextField(
-                value = input.value,
-                onValueChange = { input.value = it },
-                label = { Text(text = "Enter category:") },
-                shape = RoundedCornerShape(20.dp),
-                modifier = Modifier.height(60.dp),
-                singleLine = true
-            )
-        }
-        item {
-            Button(onClick = {
-                if (input.value.isEmpty()) {
-                    Toast.makeText(context, "enter text", Toast.LENGTH_SHORT).show()
-                } else {
-                    keyboardController.hide()
-                    isLoading.value = true
-                    val isSuccess = validate(context, input.value)
-                    if (isSuccess) {
-                        Toast.makeText(context, "Successful!", Toast.LENGTH_SHORT).show()
-                        navController.navigate("images")
-                    } else
-                        Toast.makeText(context, "No response", Toast.LENGTH_SHORT).show()
-                    isLoading.value = false
-                }
-            }) {
-                Text(text = "Search")
+        OutlinedTextField(
+            value = input.value,
+            onValueChange = { input.value = it },
+            label = { Text(text = "Enter category:") },
+            shape = RoundedCornerShape(20.dp),
+            modifier = Modifier.height(60.dp),
+            singleLine = true
+        )
+        Button(onClick = {
+            if (input.value.isEmpty()) {
+                Toast.makeText(context, "enter text", Toast.LENGTH_SHORT).show()
+            } else {
+                keyboardController.hide()
+                isLoading.value = true
+                val isSuccess = validate(context, input.value)
+                if (isSuccess) {
+                    Toast.makeText(context, "Successful!", Toast.LENGTH_SHORT).show()
+                    navController.navigate("images")
+                } else
+                    Toast.makeText(context, "No response", Toast.LENGTH_SHORT).show()
+                isLoading.value = false
             }
+        }) {
+            Text(text = "Search")
         }
     }
 }
+
 
 @OptIn(DelicateCoroutinesApi::class)
 fun validate(context: Context, input: String): Boolean {

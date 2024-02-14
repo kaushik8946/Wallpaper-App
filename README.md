@@ -15,6 +15,9 @@ https://github.com/kaushik8946/Wallpaper-App/assets/109019850/d41246ba-cba9-4303
 - Firebase
 - Rest API- OkHttp
 
+# API Used
+**Pixabay** - To get an API key, click [here](https://pixabay.com/api/docs/).
+
 # Requirements
 
 - Android Studio Jellyfish | 2023.3.1 Canary 6
